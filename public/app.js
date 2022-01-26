@@ -32,15 +32,16 @@ function userTime(){
 }
 console.log(userTime())
                                                              
+                     
+
+// helper functions
+// check time of day
 function getMealTime(){
     const tod = userTime()
     return tod > 20 ? 'latenight snack' : tod > 16 ? 'dinner' : tod > 11 ? 'lunch' : 'breakfast'
     //instead of using if else statements we are using a ternary operator
 }
-console.log(getMealTime())                     
-
-// helper functions
-// check time of day
+console.log(getMealTime())
 
 
 // build ads
@@ -53,11 +54,28 @@ function buildAd1(){
     content.append(inner)
 }
 
-buildAd1()
 
 
 // build ad 2
+// Build Ad 2                                                             
+function buildAd2(coordinates){
+    const coords = coordinates
+    const href = `https://www.google.com/maps/search/coffee/@${coords[0]},${coords[1]},15z/`
+    //plugs in the users current latitude and longitude using getCoords() from the window.onload async function
+    //and does a google.com/maps search using those coords as seen in the href link
+    let content = document.querySelector('.ad2')
+    let inner = document.createElement('p')
+    inner.innerHTML = `It's time to try our coffee! <span><a href="${href}" target="_blank">We're this close!</a></span>`
+    content.append(inner)
+}
 
+// console.log(buildAd2(getCoords()))
 
 // event listeners
 // on load, build ads
+// On load, build ads:                                                             
+window.onload = async () => {
+    buildAd1()
+    const coords = await getCoords()
+    buildAd2(coords)
+}
